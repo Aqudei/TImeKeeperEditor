@@ -61,3 +61,10 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+*.manifest binary
+*.application binary
+*.json binary
+*.dll binary
+*.exe binary
+*.pdb binary
