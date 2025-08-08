@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,7 @@ namespace TimeKeeperEditor.ViewModels
         private DelegateCommand _gotoNextLogCommand;
         private DelegateCommand _updateCommand;
         private Log? _currentLog = new Log();
-
+        public string DatabaseFile { get => _databaseFile; set => SetProperty(ref _databaseFile, value); }
         public Log? CurrentLog { get => _currentLog; set => SetProperty(ref _currentLog, value); }
 
         public Employee? SelectedEmployee { get => _selectedEmployee; set => SetProperty(ref _selectedEmployee, value); }
@@ -47,6 +48,26 @@ namespace TimeKeeperEditor.ViewModels
 
             PropertyChanged += ShellViewModel_PropertyChanged;
 
+            DatabaseFile = Properties.Settings.Default.Database;
+        }
+
+        private DelegateCommand _selectDatabaseCommand;
+
+        public DelegateCommand SelectDatabaseCommand
+        {
+            get { return _selectDatabaseCommand ??= new DelegateCommand(HandleSelectDatabase); }
+        }
+
+        private void HandleSelectDatabase()
+        {
+            var dialog = new OpenFileDialog();
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                DatabaseFile = dialog.FileName;
+                Properties.Settings.Default.Database = DatabaseFile;
+                Properties.Settings.Default.Save();
+            }
         }
 
         public DelegateCommand GotoPreviousLogCommand =>
@@ -148,6 +169,7 @@ namespace TimeKeeperEditor.ViewModels
         }
 
         private DelegateCommand _clearEmployeeCommand;
+        private string _databaseFile;
 
         public DelegateCommand ClearEmployeeCommand
         {

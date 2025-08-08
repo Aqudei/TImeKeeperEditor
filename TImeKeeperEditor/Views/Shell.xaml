@@ -8,14 +8,22 @@
         xmlns:local="clr-namespace:TimeKeeperEditor.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
         Title="Time Keeping Editor" Height="705" Width="943">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="10">
+            <Button Command="{Binding  SelectDatabaseCommand}">Select Database</Button>
+            <TextBlock Margin="8" 
+                       FontSize="20"
+                       VerticalAlignment="Center" Text="{Binding DatabaseFile}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
             <Label Margin="4,8,4,8">Employee</Label>
             <ComboBox Margin="4,8,4,8" 
                       ItemsSource="{Binding Employees, Mode=TwoWay}"
@@ -29,7 +37,7 @@
             </DatePicker>
 
         </StackPanel>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="16">
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="16">
             <Grid Margin="0,0,0,16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
